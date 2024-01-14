@@ -1,5 +1,5 @@
 {
-    "name": "@norvik/medusa-payment-mercadopago",
+    "name": "@ralexale/medusa-plugin-mercadopago",
     "version": "0.0.7",
     "description": "Mercadopago Payment Provider for Medusa Commerce",
     "author": "norvik & minskylab",
@@ -46,5 +46,8 @@
         "services",
         "env.example",
         "tsconfig.json"
-    ]
+    ],
+    "publishConfig": {
+        "access": "public"
+    }
 }
