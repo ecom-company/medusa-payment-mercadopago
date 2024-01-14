@@ -310,7 +310,7 @@ var MercadopagoProviderService = /*#__PURE__*/function (_AbstractPaymentServi) {
                 items = cart.items.map(function (item) {
                   const humanizePrice = (0, _medusaCoreUtils.humanizeAmount)(item.unit_price, currency_code);
                   let finalPrice = humanizePrice;
-                  if (cart.discounts && cart.discounts.length > 0) {
+                  if (cart.discounts && cart.discounts.length > 0 && item.discountable === true) {
                     cart.discounts.forEach(discount => {
                       if (discount.rule.type === "fixed") {
                         finalPrice -= (0, _medusaCoreUtils.humanizeAmount)(discount.rule.value, currency_code);
