@@ -1,6 +1,6 @@
 {
     "name": "@ralexale/medusa-plugin-mercadopago",
-    "version": "0.0.9",
+    "version": "1.0.0",
     "description": "Mercadopago Payment Provider for Medusa Commerce",
     "author": "norvik & minskylab",
     "license": "MIT",
