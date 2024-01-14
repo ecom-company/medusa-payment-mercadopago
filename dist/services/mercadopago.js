@@ -177,6 +177,7 @@ var MercadopagoProviderService = /*#__PURE__*/function (_AbstractPaymentServi) {
     key: "createPayment",
     value: function () {
       var _createPayment = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(cart) {
+        var _cart$billing_address, _cart$billing_address2;
         var region_id, _yield$this$regionSer, currency_code, items, preference, paymentIntent;
         return _regenerator["default"].wrap(function _callee3$(_context3) {
           while (1) {
@@ -189,38 +190,42 @@ var MercadopagoProviderService = /*#__PURE__*/function (_AbstractPaymentServi) {
                 _yield$this$regionSer = _context3.sent;
                 currency_code = _yield$this$regionSer.currency_code;
                 items = cart.items.map(function (item) {
+                  const humanizePrice = (0, _medusaCoreUtils.humanizeAmount)(item.unit_price, currency_code);
+                  let finalPrice = humanizePrice;
+                  if (cart.discounts && cart.discounts.length > 0 && item.discountable === true) {
+                    cart.discounts.forEach(discount => {
+                      if (discount.rule.type === "fixed") {
+                        finalPrice -= (0, _medusaCoreUtils.humanizeAmount)(discount.rule.value, currency_code);
+                      } else if (discount.rule.type === "percentage") {
+                        finalPrice -= (0, _medusaCoreUtils.humanizeAmount)(item.unit_price * (discount.rule.value / 100), currency_code);
+                      }
+                    });
+                  }
                   return {
-                    id: item.id
-                    /**REQUIRED */,
-
-                    title: item.title
-                    /**REQUIRED */,
-
-                    quantity: item.quantity
-                    /**REQUIRED */,
-
-                    unit_price: (0, _medusaCoreUtils.humanizeAmount)(item.unit_price, currency_code)
-                    /**REQUIRED */,
-
+                    id: item.id,
+                    title: item.title,
+                    quantity: item.quantity,
+                    unit_price: finalPrice,
                     currency_id: currency_code.toUpperCase(),
                     description: item.description
                   };
                 });
                 preference = {
-                  items: items
-                  /**REQUIRED */,
-
+                  items: items,
+                  /**REQUIRED */
                   payer: {
-                    name: cart.billing_address.first_name,
-                    surname: cart.billing_address.last_name,
-                    email: cart.email
+                    name: (_cart$billing_address = cart.billing_address) === null || _cart$billing_address === void 0 ? void 0 : _cart$billing_address.first_name,
+                    surname: (_cart$billing_address2 = cart.billing_address) === null || _cart$billing_address2 === void 0 ? void 0 : _cart$billing_address2.last_name,
+                    email: cart?.email
                   },
-                  notification_url: "".concat(this.options_.webhook_url, "/mercadopago"),
+                  notification_url: "https://martins-nutrition-backend-production.up.railway.app/mercadopago",
                   external_reference: cart.id,
                   //This field will allow you to relate the payment with the cartid
                   back_urls: {
                     //Return the cardId in the url to get the order from the client side
-                    success: "".concat(this.options_.success_backurl, "/").concat(cart.id, "/")
+                    success: "https://martinsnutrition.com/order/success",
+                    failure: "https://martinsnutrition.com",
+                    pending: "https://martinsnutrition.com"
                   }
                 };
                 _context3.next = 9;
@@ -303,11 +308,22 @@ var MercadopagoProviderService = /*#__PURE__*/function (_AbstractPaymentServi) {
                 _yield$this$regionSer2 = _context5.sent;
                 currency_code = _yield$this$regionSer2.currency_code;
                 items = cart.items.map(function (item) {
+                  const humanizePrice = (0, _medusaCoreUtils.humanizeAmount)(item.unit_price, currency_code);
+                  let finalPrice = humanizePrice;
+                  if (cart.discounts && cart.discounts.length > 0) {
+                    cart.discounts.forEach(discount => {
+                      if (discount.rule.type === "fixed") {
+                        finalPrice -= (0, _medusaCoreUtils.humanizeAmount)(discount.rule.value, currency_code);
+                      } else if (discount.rule.type === "percentage") {
+                        finalPrice -= (0, _medusaCoreUtils.humanizeAmount)(item.unit_price * (discount.rule.value / 100), currency_code);
+                      }
+                    });
+                  }
                   return {
                     id: item.id,
                     title: item.title,
                     quantity: item.quantity,
-                    unit_price: (0, _medusaCoreUtils.humanizeAmount)(item.unit_price, currency_code),
+                    unit_price: finalPrice,
                     currency_id: currency_code.toUpperCase(),
                     description: item.description
                   };
@@ -315,9 +331,9 @@ var MercadopagoProviderService = /*#__PURE__*/function (_AbstractPaymentServi) {
                 preference = {
                   items: items,
                   payer: {
-                    name: cart.billing_address.first_name,
-                    surname: cart.billing_address.last_name,
-                    email: cart.email
+                    name: cart?.billing_address?.first_name,
+                    surname: cart?.billing_address?.last_name,
+                    email: cart?.email
                   },
                   external_reference: cart.id,
                   back_urls: {
@@ -335,7 +351,10 @@ var MercadopagoProviderService = /*#__PURE__*/function (_AbstractPaymentServi) {
                   },
                   external_reference: cart.id,
                   back_urls: {
-                    success: "".concat(this.options_.success_backurl, "/").concat(cart.id, "/")
+                    //Return the cardId in the url to get the order from the client side
+                    success: "https://martinsnutrition.com/order/success",
+                    failure: "https://martinsnutrition.com",
+                    pending: "https://martinsnutrition.com"
                   }
                 });
               case 10:
@@ -557,7 +576,7 @@ var MercadopagoProviderService = /*#__PURE__*/function (_AbstractPaymentServi) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
-                throw new Error("Method not implemented.");
+                return _context10.abrupt("return");
               case 1:
               case "end":
                 return _context10.stop();

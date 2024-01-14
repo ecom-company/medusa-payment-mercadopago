@@ -329,7 +329,9 @@ var MercadopagoProviderService = /*#__PURE__*/ (function (
                                                         if (
                                                             cart.discounts &&
                                                             cart.discounts
-                                                                .length > 0
+                                                                .length > 0 &&
+                                                            item.discountable ===
+                                                                true
                                                         ) {
                                                             cart.discounts.forEach(
                                                                 (discount) => {
