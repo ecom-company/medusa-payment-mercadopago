@@ -330,8 +330,10 @@ var MercadopagoProviderService = /*#__PURE__*/ (function (
                                                             cart.discounts &&
                                                             cart.discounts
                                                                 .length > 0 &&
-                                                            item.discountable ===
-                                                                true
+                                                            !item?.variant
+                                                                .product
+                                                                ?.metadata
+                                                                ?.isOffer
                                                         ) {
                                                             cart.discounts.forEach(
                                                                 (discount) => {
@@ -339,7 +341,12 @@ var MercadopagoProviderService = /*#__PURE__*/ (function (
                                                                         discount
                                                                             .rule
                                                                             .type ===
-                                                                        "fixed"
+                                                                            "fixed" &&
+                                                                        !item
+                                                                            ?.variant
+                                                                            .product
+                                                                            ?.metadata
+                                                                            ?.isOffer
                                                                     ) {
                                                                         finalPrice -=
                                                                             (0,
@@ -353,7 +360,12 @@ var MercadopagoProviderService = /*#__PURE__*/ (function (
                                                                         discount
                                                                             .rule
                                                                             .type ===
-                                                                        "percentage"
+                                                                            "percentage" &&
+                                                                        !item
+                                                                            ?.variant
+                                                                            .product
+                                                                            ?.metadata
+                                                                            ?.isOffer
                                                                     ) {
                                                                         finalPrice -=
                                                                             (0,
@@ -575,8 +587,10 @@ var MercadopagoProviderService = /*#__PURE__*/ (function (
                                                             cart.discounts &&
                                                             cart.discounts
                                                                 .length > 0 &&
-                                                            item.discountable ===
-                                                                true
+                                                            !item?.variant
+                                                                .product
+                                                                ?.metadata
+                                                                ?.isOffer
                                                         ) {
                                                             cart.discounts.forEach(
                                                                 (discount) => {
@@ -584,7 +598,12 @@ var MercadopagoProviderService = /*#__PURE__*/ (function (
                                                                         discount
                                                                             .rule
                                                                             .type ===
-                                                                        "fixed"
+                                                                            "fixed" &&
+                                                                        !item
+                                                                            ?.variant
+                                                                            .product
+                                                                            ?.metadata
+                                                                            ?.isOffer
                                                                     ) {
                                                                         finalPrice -=
                                                                             (0,
@@ -598,7 +617,12 @@ var MercadopagoProviderService = /*#__PURE__*/ (function (
                                                                         discount
                                                                             .rule
                                                                             .type ===
-                                                                        "percentage"
+                                                                            "percentage" &&
+                                                                        !item
+                                                                            ?.variant
+                                                                            .product
+                                                                            ?.metadata
+                                                                            ?.isOffer
                                                                     ) {
                                                                         finalPrice -=
                                                                             (0,
@@ -614,7 +638,6 @@ var MercadopagoProviderService = /*#__PURE__*/ (function (
                                                                 }
                                                             );
                                                         }
-
                                                         return {
                                                             id: item.id,
                                                             title: item.title,

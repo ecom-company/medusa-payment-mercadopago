@@ -192,11 +192,11 @@ var MercadopagoProviderService = /*#__PURE__*/function (_AbstractPaymentServi) {
                 items = cart.items.map(function (item) {
                   const humanizePrice = (0, _medusaCoreUtils.humanizeAmount)(item.unit_price, currency_code);
                   let finalPrice = humanizePrice;
-                  if (cart.discounts && cart.discounts.length > 0 && item.discountable === true) {
+                  if (cart.discounts && cart.discounts.length > 0 && !item?.variant.product?.metadata?.isOffer) {
                     cart.discounts.forEach(discount => {
-                      if (discount.rule.type === "fixed") {
+                      if (discount.rule.type === "fixed" && !item?.variant.product?.metadata?.isOffer) {
                         finalPrice -= (0, _medusaCoreUtils.humanizeAmount)(discount.rule.value, currency_code);
-                      } else if (discount.rule.type === "percentage") {
+                      } else if (discount.rule.type === "percentage" && !item?.variant.product?.metadata?.isOffer) {
                         finalPrice -= (0, _medusaCoreUtils.humanizeAmount)(item.unit_price * (discount.rule.value / 100), currency_code);
                       }
                     });
@@ -310,11 +310,11 @@ var MercadopagoProviderService = /*#__PURE__*/function (_AbstractPaymentServi) {
                 items = cart.items.map(function (item) {
                   const humanizePrice = (0, _medusaCoreUtils.humanizeAmount)(item.unit_price, currency_code);
                   let finalPrice = humanizePrice;
-                  if (cart.discounts && cart.discounts.length > 0 && item.discountable === true) {
+                  if (cart.discounts && cart.discounts.length > 0 && !item?.variant.product?.metadata?.isOffer) {
                     cart.discounts.forEach(discount => {
-                      if (discount.rule.type === "fixed") {
+                      if (discount.rule.type === "fixed" && !item?.variant.product?.metadata?.isOffer) {
                         finalPrice -= (0, _medusaCoreUtils.humanizeAmount)(discount.rule.value, currency_code);
-                      } else if (discount.rule.type === "percentage") {
+                      } else if (discount.rule.type === "percentage" && !item?.variant.product?.metadata?.isOffer) {
                         finalPrice -= (0, _medusaCoreUtils.humanizeAmount)(item.unit_price * (discount.rule.value / 100), currency_code);
                       }
                     });
